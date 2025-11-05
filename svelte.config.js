@@ -10,15 +10,9 @@ const config = {
 	kit: {
 		// Static adapter for Telegram Mini App (no server needed)
 		adapter: adapter({
-			pages: 'build',
-			assets: 'build',
 			fallback: 'index.html', // SPA mode for client-side routing
-			precompress: false,
 			strict: false
 		}),
-		csrf: {
-			checkOrigin: false,
-		},
 	},
 };
 
