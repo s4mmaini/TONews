@@ -9,4 +9,7 @@ export default defineConfig({
 				conditions: ['browser'],
 			}
 		: undefined,
+	build: {
+		assetsInlineLimit: 0, // Prevent inlining assets
+	}
 });
