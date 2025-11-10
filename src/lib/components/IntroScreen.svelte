@@ -70,7 +70,7 @@ $effect(() => {
               TONews
             </h1>
             <p class="text-gray-600 dark:text-gray-300">
-              Il tuo digest quotidiano di notizie su Telegram
+              Your daily news digest on Telegram
             </p>
           </div>
         </div>
@@ -80,10 +80,10 @@ $effect(() => {
             <h2
               class="mb-3 text-xl font-semibold text-gray-900 dark:text-white"
             >
-              Cos'è TONews?
+              What is TONews?
             </h2>
             <p class="mb-4">
-              TONews è una Mini App Telegram che ti porta 12 notizie rilevanti ogni giorno, curate per i tuoi interessi: Crypto, Sport, Politica e molto altro. Un'interfaccia pulita, niente distrazioni, zero pubblicità invasiva.
+              TONews is a Telegram Mini App that brings you 12 relevant news stories every day, curated for your interests: Crypto, Sports, Politics, and more. A clean interface, no distractions, zero intrusive advertising.
             </p>
           </section>
 
@@ -91,23 +91,23 @@ $effect(() => {
             <h2
               class="mb-3 text-xl font-semibold text-gray-900 dark:text-white"
             >
-              I nostri principi
+              Our Principles
             </h2>
             <ul class="space-y-2">
               <li>
-                • <strong>Chiarezza</strong>: solo le notizie che contano, senza rumore di fondo
+                • <strong>Clarity</strong>: only the news that matters, without background noise
               </li>
               <li>
-                • <strong>Sintesi</strong>: 12 storie al giorno, mai troppo, mai troppo poco
+                • <strong>Synthesis</strong>: 12 stories per day, never too much, never too little
               </li>
               <li>
-                • <strong>Zero sovraccarico</strong>: niente scroll infinito, niente clickbait
+                • <strong>Zero overload</strong>: no infinite scroll, no clickbait
               </li>
               <li>
-                • <strong>Privacy</strong>: nessun tracker pubblicitario di terze parti
+                • <strong>Privacy</strong>: no third-party advertising trackers
               </li>
               <li>
-                • <strong>Trasparenza delle fonti</strong>: ogni notizia indica la sua origine
+                • <strong>Source transparency</strong>: every story indicates its origin
               </li>
             </ul>
           </section>
@@ -116,13 +116,13 @@ $effect(() => {
             <h2
               class="mb-3 text-xl font-semibold text-gray-900 dark:text-white"
             >
-              Come funziona
+              How it Works
             </h2>
             <p class="mb-4 text-gray-700 dark:text-gray-300">
-              Ogni giorno TONews seleziona e aggrega notizie da fonti pubbliche verificate. L'elenco viene aggiornato regolarmente per garantirti contenuti sempre freschi e rilevanti.
+              Every day, TONews selects and aggregates news from verified public sources. The list is updated regularly to ensure you get fresh and relevant content.
             </p>
             <p class="mb-4 text-gray-700 dark:text-gray-300">
-              Puoi personalizzare le categorie che preferisci e leggere le notizie direttamente dall'app, oppure approfondire visitando le fonti originali.
+              You can customize your preferred categories and read the news directly in the app, or explore further by visiting the original sources.
             </p>
           </section>
 
@@ -130,20 +130,20 @@ $effect(() => {
             <h2
               class="mb-3 text-xl font-semibold text-gray-900 dark:text-white"
             >
-              Trasparenza
+              Transparency
             </h2>
             <p class="mb-4 text-gray-700 dark:text-gray-300">
-              Le notizie provengono da fonti pubbliche e API accessibili. TONews non è affiliato con i publisher originali. Tutti i contenuti rimandano alle fonti ufficiali e rispettiamo le licenze d'uso.
+              News comes from public sources and accessible APIs. TONews is not affiliated with the original publishers. All content links back to official sources, and we respect usage licenses.
             </p>
             <p class="mb-4 text-gray-700 dark:text-gray-300">
-              Non vendiamo i tuoi dati. Non tracciamo la tua navigazione al di fuori dell'app. Telegram gestisce l'autenticazione in modo sicuro.
+              We don't sell your data. We don't track your browsing outside the app. Telegram handles authentication securely.
             </p>
           </section>
 
           <!-- Disclaimer -->
           <section class="mt-6 rounded-lg bg-gray-100 dark:bg-gray-700 p-4">
             <p class="text-sm text-gray-600 dark:text-gray-400 text-center">
-              I sommari possono essere generati automaticamente. Verifica sempre le informazioni importanti consultando le fonti originali.
+              Summaries may be automatically generated. Always verify important information by consulting the original sources.
             </p>
           </section>
 
