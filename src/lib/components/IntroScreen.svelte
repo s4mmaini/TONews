@@ -67,10 +67,10 @@ $effect(() => {
         <div class="mb-8 flex items-start justify-between">
           <div class="w-full">
             <h1 class="mb-2 text-3xl font-bold text-gray-900 dark:text-white">
-              {s("app.title") || "Kite"}
+              TONews
             </h1>
             <p class="text-gray-600 dark:text-gray-300">
-              {s("about.subtitle") || "News app by Kagi"}
+              Il tuo digest quotidiano di notizie su Telegram
             </p>
           </div>
         </div>
@@ -80,11 +80,10 @@ $effect(() => {
             <h2
               class="mb-3 text-xl font-semibold text-gray-900 dark:text-white"
             >
-              {@html s("about.why.title") || "Why Kite?"}
+              Cos'è TONews?
             </h2>
             <p class="mb-4">
-              {@html s("about.why.description") ||
-                "Kite provides a better way to read news."}
+              TONews è una Mini App Telegram che ti porta 12 notizie rilevanti ogni giorno, curate per i tuoi interessi: Crypto, Sport, Politica e molto altro. Un'interfaccia pulita, niente distrazioni, zero pubblicità invasiva.
             </p>
           </section>
 
@@ -92,41 +91,24 @@ $effect(() => {
             <h2
               class="mb-3 text-xl font-semibold text-gray-900 dark:text-white"
             >
-              {@html s("about.approach.title") || "Our Approach"}
-            </h2>
-            <p class="mb-4 text-gray-700 dark:text-gray-300">
-              {@html s("about.approach.description1") ||
-                "We aggregate news from multiple sources."}
-            </p>
-            <p class="mb-4 text-gray-700 dark:text-gray-300">
-              {@html s("about.approach.description2") ||
-                "We provide summaries and context."}
-            </p>
-            <p class="mb-4 text-gray-700 dark:text-gray-300">
-              {@html s("about.approach.description3") ||
-                "We respect your privacy."}
-            </p>
-          </section>
-
-          <section>
-            <h2
-              class="mb-3 text-xl font-semibold text-gray-900 dark:text-white"
-            >
-              {@html s("about.principles.title") || "Our Principles"}
+              I nostri principi
             </h2>
             <ul class="space-y-2">
               <li>
-                • {s("about.principles.item1") || "No tracking or cookies"}
+                • <strong>Chiarezza</strong>: solo le notizie che contano, senza rumore di fondo
               </li>
               <li>
-                • {s("about.principles.item2") || "No ads or sponsored content"}
+                • <strong>Sintesi</strong>: 12 storie al giorno, mai troppo, mai troppo poco
               </li>
               <li>
-                • {s("about.principles.item3") || "Multiple perspectives"}
+                • <strong>Zero sovraccarico</strong>: niente scroll infinito, niente clickbait
               </li>
-              <li>• {s("about.principles.item4") || "Source transparency"}</li>
-              <li>• {s("about.principles.item5") || "Fast and lightweight"}</li>
-              <li>• {s("about.principles.item6") || "Open source"}</li>
+              <li>
+                • <strong>Privacy</strong>: nessun tracker pubblicitario di terze parti
+              </li>
+              <li>
+                • <strong>Trasparenza delle fonti</strong>: ogni notizia indica la sua origine
+              </li>
             </ul>
           </section>
 
@@ -134,11 +116,13 @@ $effect(() => {
             <h2
               class="mb-3 text-xl font-semibold text-gray-900 dark:text-white"
             >
-              {@html s("about.customization.title") || "Customization"}
+              Come funziona
             </h2>
-            <p>
-              {@html s("about.customization.description") ||
-                "Customize Kite to fit your reading preferences."}
+            <p class="mb-4 text-gray-700 dark:text-gray-300">
+              Ogni giorno TONews seleziona e aggrega notizie da fonti pubbliche verificate. L'elenco viene aggiornato regolarmente per garantirti contenuti sempre freschi e rilevanti.
+            </p>
+            <p class="mb-4 text-gray-700 dark:text-gray-300">
+              Puoi personalizzare le categorie che preferisci e leggere le notizie direttamente dall'app, oppure approfondire visitando le fonti originali.
             </p>
           </section>
 
@@ -146,22 +130,20 @@ $effect(() => {
             <h2
               class="mb-3 text-xl font-semibold text-gray-900 dark:text-white"
             >
-              {@html s("about.contact.title") || "Contact"}
+              Trasparenza
             </h2>
-            <p>
-              {@html s("about.contact.description") ||
-                "Questions or feedback? Contact us at news@kagi.com"}
+            <p class="mb-4 text-gray-700 dark:text-gray-300">
+              Le notizie provengono da fonti pubbliche e API accessibili. TONews non è affiliato con i publisher originali. Tutti i contenuti rimandano alle fonti ufficiali e rispettiamo le licenze d'uso.
+            </p>
+            <p class="mb-4 text-gray-700 dark:text-gray-300">
+              Non vendiamo i tuoi dati. Non tracciamo la tua navigazione al di fuori dell'app. Telegram gestisce l'autenticazione in modo sicuro.
             </p>
           </section>
 
           <!-- Disclaimer -->
           <section class="mt-6 rounded-lg bg-gray-100 dark:bg-gray-700 p-4">
             <p class="text-sm text-gray-600 dark:text-gray-400 text-center">
-              {s("app.disclaimerAutoGenerated") ||
-                "Summaries are AI-generated and Kite can make mistakes."}
-              {" "}
-              {s("app.disclaimerVerify") ||
-                "Please verify important information."}
+              I sommari possono essere generati automaticamente. Verifica sempre le informazioni importanti consultando le fonti originali.
             </p>
           </section>
 
