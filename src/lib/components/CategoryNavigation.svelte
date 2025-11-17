@@ -233,15 +233,8 @@ $effect(() => {
             tabindex={currentCategory === category.id ? 0 : -1}
             aria-selected={currentCategory === category.id}
             aria-controls="category-{category.id}"
-            class="category-tab whitespace-nowrap cursor-pointer px-4 py-2 md:py-3 text-base font-medium transition-colors focus-visible-ring relative"
+            class="category-tab relative shrink-0 whitespace-nowrap cursor-pointer px-4 py-3 text-sm font-medium transition-all focus-visible-ring"
             class:active={currentCategory === category.id}
-            class:text-blue-600={currentCategory === category.id}
-            class:border-b-2={currentCategory === category.id}
-            class:border-blue-600={currentCategory === category.id}
-            class:text-gray-600={currentCategory !== category.id}
-            class:hover:text-gray-800={currentCategory !== category.id}
-            class:dark:text-gray-400={currentCategory !== category.id}
-            class:dark:hover:text-gray-200={currentCategory !== category.id}
             onclick={() => handleCategoryClick(category.id)}
             onkeydown={(e) => handleCategoryKeydown(e, category.id)}
             ondblclick={() =>
@@ -249,6 +242,9 @@ $effect(() => {
               onCategoryDoubleClick?.(category.id)}
           >
             {getCategoryDisplayName(category)}
+            {#if currentCategory === category.id}
+              <div class="absolute bottom-0 left-0 right-0 h-0.5" style="background-color: var(--tg-accent);"></div>
+            {/if}
           </button>
         {/each}
       </div>

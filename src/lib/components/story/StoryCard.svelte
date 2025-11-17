@@ -164,11 +164,10 @@ $effect(() => {
   id="story-{story.cluster_number}"
   data-story-id={story.cluster_number?.toString() || story.title}
   aria-label="News story: {story.title}"
-  class="relative py-2 transition-all duration-300"
-  class:cursor-pointer={isBlurred}
-  class:border-b={!isExpanded}
-  class:border-gray-200={!isExpanded}
-  class:dark:border-gray-700={!isExpanded}
+  class="group relative mb-4 rounded-xl p-4 transition-all duration-200 hover:bg-[var(--tg-card-hover)]"
+  class:cursor-pointer={isBlurred || !isExpanded}
+  class:opacity-60={isRead && !isExpanded}
+  style="background-color: var(--tg-card-bg);"
   onmouseenter={hoverPreloader.handleMouseEnter}
   onmouseleave={hoverPreloader.handleMouseLeave}
   onfocus={hoverPreloader.handleMouseEnter}
@@ -190,7 +189,7 @@ $effect(() => {
     <!-- Expanded Content -->
     {#if isExpanded}
       <div
-        class="dark:bg-dark-bg flex flex-col bg-white py-4"
+        class="flex flex-col py-4"
         role="region"
         aria-label="Story content"
       >

@@ -1,6 +1,7 @@
 <script lang="ts">
 import { IconClock, IconSearch } from '@tabler/icons-svelte';
 import { browser } from '$app/environment';
+import { onMount } from 'svelte';
 import { s } from '$lib/client/localization.svelte';
 import { features } from '$lib/config/features';
 import {
@@ -48,6 +49,9 @@ let isExitingTimeTravel = $state(false);
 // Kite animation state
 let showFlyingKite = $state(false);
 let kiteStartPosition = $state({ x: 0, y: 0 });
+
+// Mobile header alternating state (logo vs center info)
+let showMobileLogo = $state(true);
 
 // Platform detection for keyboard shortcut
 const isMac =
@@ -101,6 +105,17 @@ function toggleFontSize() {
 function capitalizeFirst(str: string): string {
 	return str.charAt(0).toUpperCase() + str.slice(1);
 }
+
+// Setup mobile header alternating animation
+onMount(() => {
+	if (browser) {
+		const interval = setInterval(() => {
+			showMobileLogo = !showMobileLogo;
+		}, 3000); // Switch every 3 seconds
+
+		return () => clearInterval(interval);
+	}
+});
 
 // Computed date/stats display
 const dateDisplay = $derived.by(() => {
@@ -244,61 +259,85 @@ const dateDisplay = $derived.by(() => {
 {/snippet}
 
 <header class="mb-1">
-  <!-- First row: Logo, Chaos Index (mobile), and buttons -->
-  <div class="flex items-center justify-between relative">
-    <div class="flex items-center">
+  <!-- Telegram-style header -->
+  <div class="flex items-center justify-between relative h-14">
+    <!-- Left: Logo + Title (hidden on mobile) -->
+    <div class="hidden sm:flex items-center gap-3">
       <img
-        src={themeSettings.isDark
-          ? "/svg/kagi_news_compact_dark.svg"
-          : "/svg/kagi_news_compact.svg"}
-        alt={s("app.logo.newsAlt") || "Kite News"}
-        class="me-2 h-7 sm:h-8 w-20 sm:w-22 logo relative z-50"
+        src="/tonews-logo.png"
+        alt={s("app.logo.newsAlt") || "TONews"}
+        class="h-8 w-8 rounded-lg cursor-pointer"
         onclick={handleLogoClick}
         role="presentation"
         style="isolation: isolate;"
       />
+      <h1 class="text-lg font-semibold" style="color: var(--tg-text-primary);">TONews</h1>
     </div>
 
-    <!-- Chaos Index - Mobile: centered in first row -->
+    <!-- Mobile: Alternating animation between logo and center info -->
+    <div class="sm:hidden relative h-8 w-48 overflow-hidden">
+      <!-- Logo + Title -->
+      <div
+        class="absolute inset-0 flex items-center justify-start transition-transform duration-500 ease-in-out"
+        style="transform: translateY({showMobileLogo ? '0' : '-100%'});"
+      >
+        <div class="flex items-center gap-2">
+          <img
+            src="/tonews-logo.png"
+            alt={s("app.logo.newsAlt") || "TONews"}
+            class="h-7 w-7 rounded-lg cursor-pointer"
+            onclick={handleLogoClick}
+            role="presentation"
+          />
+          <h1 class="text-base font-semibold" style="color: var(--tg-text-primary);">TONews</h1>
+        </div>
+      </div>
+
+      <!-- Center info (Chaos Index or Date) -->
+      <div
+        class="absolute inset-0 flex items-center justify-start transition-transform duration-500 ease-in-out"
+        style="transform: translateY({showMobileLogo ? '100%' : '0'});"
+      >
+        {#if experimentalSettings.isEnabled('showChaosIndex') && chaosIndex && chaosIndex.score > 0}
+          <ChaosIndex
+            score={chaosIndex.score}
+            summary={chaosIndex.summary}
+            lastUpdated={chaosIndex.lastUpdated}
+          />
+        {:else}
+          <div class="text-sm" style="color: var(--tg-text-secondary);">
+            {@render dateSection()}
+          </div>
+        {/if}
+      </div>
+    </div>
+
+    <!-- Center: Chaos Index (Desktop) or Date Section -->
     {#if experimentalSettings.isEnabled('showChaosIndex') && chaosIndex && chaosIndex.score > 0}
-      <div class="sm:hidden absolute start-1/2 ltr:-translate-x-1/2 rtl:translate-x-1/2">
+      <div class="hidden sm:flex absolute start-1/2 ltr:-translate-x-1/2 rtl:translate-x-1/2">
         <ChaosIndex
           score={chaosIndex.score}
           summary={chaosIndex.summary}
           lastUpdated={chaosIndex.lastUpdated}
         />
       </div>
+    {:else}
+      <div class="hidden sm:flex absolute start-1/2 ltr:-translate-x-1/2 rtl:translate-x-1/2 items-center">
+        {@render dateSection()}
+      </div>
     {/if}
 
-    <!-- Date section hidden on mobile, shown on desktop in center -->
-    <div
-      class="hidden sm:flex absolute start-1/2 ltr:-translate-x-1/2 rtl:translate-x-1/2 items-center"
-    >
-      {@render dateSection()}
-    </div>
-
-    <div class="ms-auto flex items-center space-x-1 sm:space-x-2">
-      <!-- Chaos Index - Desktop only, in first row -->
-      {#if experimentalSettings.isEnabled('showChaosIndex') && chaosIndex && chaosIndex.score > 0}
-        <div class="hidden sm:block">
-          <ChaosIndex
-            score={chaosIndex.score}
-            summary={chaosIndex.summary}
-            lastUpdated={chaosIndex.lastUpdated}
-          />
-        </div>
-      {/if}
-
-      <!-- Time Travel button - shown when historical search is enabled -->
+    <!-- Right: Action buttons -->
+    <div class="ms-auto flex items-center gap-2">
       {#if features.historicalSearch}
         <button
           onclick={() => timeTravel.toggle()}
           title={s("header.timeTravel") || "Time Travel"}
           aria-label={s("header.timeTravel") || "Time Travel"}
-          class="p-1 sm:ms-2"
+          class="h-9 w-9 flex items-center justify-center rounded-lg hover:bg-[var(--tg-card-hover)] transition-colors"
           type="button"
         >
-          <IconClock size={24} stroke={2} class="text-black dark:text-white" />
+          <IconClock size={20} stroke={2} style="color: var(--tg-text-primary);" />
         </button>
       {/if}
 
@@ -306,23 +345,24 @@ const dateDisplay = $derived.by(() => {
         onclick={onSearchClick}
         title={searchTooltip}
         aria-label={s("header.search") || "Search"}
-        class="p-1 sm:ms-2"
+        class="h-9 w-9 flex items-center justify-center rounded-lg hover:bg-[var(--tg-card-hover)] transition-colors"
         type="button"
       >
-        <IconSearch size={24} stroke={2} class="text-black dark:text-white" />
+        <IconSearch size={20} stroke={2} style="color: var(--tg-text-primary);" />
       </button>
 
       <button
         onclick={toggleFontSize}
         title={s("header.fontSize") || "Font Size"}
         aria-label={s("header.fontSize") || "Font Size"}
-        class="p-1 sm:ms-2"
+        class="h-9 w-9 flex items-center justify-center rounded-lg hover:bg-[var(--tg-card-hover)] transition-colors"
         type="button"
       >
         <img
           src="/svg/font-size.svg"
           alt=""
-          class="h-5 w-5 sm:h-6 sm:w-6 text-gray-600 dark:text-gray-400 dark:invert"
+          class="h-5 w-5 dark:invert"
+          style="color: var(--tg-text-primary);"
           aria-hidden="true"
         />
       </button>
@@ -334,22 +374,18 @@ const dateDisplay = $derived.by(() => {
         }}
         title={s("header.settings") || "Settings"}
         aria-label={s("header.settings") || "Settings"}
-        class="p-1 sm:ms-2"
+        class="h-9 w-9 flex items-center justify-center rounded-lg hover:bg-[var(--tg-card-hover)] transition-colors"
         type="button"
       >
         <img
           src="/svg/gear.svg"
           alt=""
-          class="h-5 w-5 sm:h-6 sm:w-6 text-gray-600 dark:text-gray-400 dark:invert"
+          class="h-5 w-5 dark:invert"
+          style="color: var(--tg-text-primary);"
           aria-hidden="true"
         />
       </button>
     </div>
-  </div>
-
-  <!-- Mobile layout - Date only, centered -->
-  <div class="flex sm:hidden items-center justify-center mt-1 px-2">
-    {@render dateSection()}
   </div>
 </header>
 
