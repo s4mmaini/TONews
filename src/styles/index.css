@@ -33,8 +33,8 @@
 	--tg-accent: #3390ec;
 	--tg-accent-hover: #2b7cd3;
 	--tg-border: #e5e5e5;
-	--tg-card-bg: #ffffff;
-	--tg-card-hover: #f8f9fa;
+	--tg-card-bg: #f8f9fa;
+	--tg-card-hover: #f0f1f2;
 
 	/* Border radius */
 	--radius: 0.75rem;

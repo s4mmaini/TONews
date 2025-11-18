@@ -4,6 +4,7 @@ import { getContext } from 'svelte';
 import { s } from '$lib/client/localization.svelte';
 import { syncManager } from '$lib/client/sync-manager';
 import { safeGetItem, safeSetItem } from '$lib/client/utils/safe-storage';
+import type { Session } from '$lib/types/session';
 
 // Get session from context
 const session = getContext<Session>('session');

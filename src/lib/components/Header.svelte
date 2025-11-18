@@ -260,18 +260,18 @@ const dateDisplay = $derived.by(() => {
 
 <header class="mb-1">
   <!-- Telegram-style header -->
-  <div class="flex items-center justify-between relative h-14">
+  <div class="flex items-center justify-between relative h-12">
     <!-- Left: Logo + Title (hidden on mobile) -->
-    <div class="hidden sm:flex items-center gap-3">
+    <div class="hidden sm:flex items-center gap-2.5">
       <img
         src="/tonews-logo.png"
         alt={s("app.logo.newsAlt") || "TONews"}
-        class="h-8 w-8 rounded-lg cursor-pointer"
+        class="h-7 w-7 rounded-lg cursor-pointer"
         onclick={handleLogoClick}
         role="presentation"
         style="isolation: isolate;"
       />
-      <h1 class="text-lg font-semibold" style="color: var(--tg-text-primary);">TONews</h1>
+      <h1 class="text-base font-semibold" style="color: var(--tg-text-primary);">TONews</h1>
     </div>
 
     <!-- Mobile: Alternating animation between logo and center info -->
@@ -328,16 +328,16 @@ const dateDisplay = $derived.by(() => {
     {/if}
 
     <!-- Right: Action buttons -->
-    <div class="ms-auto flex items-center gap-2">
+    <div class="ms-auto flex items-center gap-1.5">
       {#if features.historicalSearch}
         <button
           onclick={() => timeTravel.toggle()}
           title={s("header.timeTravel") || "Time Travel"}
           aria-label={s("header.timeTravel") || "Time Travel"}
-          class="h-9 w-9 flex items-center justify-center rounded-lg hover:bg-[var(--tg-card-hover)] transition-colors"
+          class="h-8 w-8 flex items-center justify-center rounded-lg hover:bg-[var(--tg-card-hover)] transition-colors"
           type="button"
         >
-          <IconClock size={20} stroke={2} style="color: var(--tg-text-primary);" />
+          <IconClock size={18} stroke={2} style="color: var(--tg-text-primary);" />
         </button>
       {/if}
 
@@ -345,23 +345,23 @@ const dateDisplay = $derived.by(() => {
         onclick={onSearchClick}
         title={searchTooltip}
         aria-label={s("header.search") || "Search"}
-        class="h-9 w-9 flex items-center justify-center rounded-lg hover:bg-[var(--tg-card-hover)] transition-colors"
+        class="h-8 w-8 flex items-center justify-center rounded-lg hover:bg-[var(--tg-card-hover)] transition-colors"
         type="button"
       >
-        <IconSearch size={20} stroke={2} style="color: var(--tg-text-primary);" />
+        <IconSearch size={18} stroke={2} style="color: var(--tg-text-primary);" />
       </button>
 
       <button
         onclick={toggleFontSize}
         title={s("header.fontSize") || "Font Size"}
         aria-label={s("header.fontSize") || "Font Size"}
-        class="h-9 w-9 flex items-center justify-center rounded-lg hover:bg-[var(--tg-card-hover)] transition-colors"
+        class="h-8 w-8 flex items-center justify-center rounded-lg hover:bg-[var(--tg-card-hover)] transition-colors"
         type="button"
       >
         <img
           src="/svg/font-size.svg"
           alt=""
-          class="h-5 w-5 dark:invert"
+          class="h-[18px] w-[18px] dark:invert"
           style="color: var(--tg-text-primary);"
           aria-hidden="true"
         />
@@ -374,13 +374,13 @@ const dateDisplay = $derived.by(() => {
         }}
         title={s("header.settings") || "Settings"}
         aria-label={s("header.settings") || "Settings"}
-        class="h-9 w-9 flex items-center justify-center rounded-lg hover:bg-[var(--tg-card-hover)] transition-colors"
+        class="h-8 w-8 flex items-center justify-center rounded-lg hover:bg-[var(--tg-card-hover)] transition-colors"
         type="button"
       >
         <img
           src="/svg/gear.svg"
           alt=""
-          class="h-5 w-5 dark:invert"
+          class="h-[18px] w-[18px] dark:invert"
           style="color: var(--tg-text-primary);"
           aria-hidden="true"
         />

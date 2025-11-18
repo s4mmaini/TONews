@@ -1528,7 +1528,7 @@
     "translationContext": "Format for displaying dates. {weekday} will be replaced with the day of the week, {month} with the month name, and {day} with the day number."
   },
   "footer.about": {
-    "text": "About Kagi News",
+    "text": "About TONews",
     "translationContext": "Link text for about page"
   },
   "footer.aboutMobile": {

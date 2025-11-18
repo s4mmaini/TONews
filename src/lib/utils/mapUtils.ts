@@ -4,6 +4,7 @@
 
 import { displaySettings } from '$lib/data/settings.svelte';
 import { getMapsUrl } from './mapsProvider';
+import type { Session } from '$lib/types/session';
 
 /**
  * Detects if the current device is an Apple device

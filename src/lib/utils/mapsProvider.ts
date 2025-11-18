@@ -1,5 +1,6 @@
 import { getContext } from 'svelte';
 import type { MapsProvider } from '$lib/data/settings.svelte';
+import type { Session } from '$lib/types/session';
 
 /**
  * Check if the user is logged into Kagi

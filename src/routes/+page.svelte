@@ -139,6 +139,10 @@ let wikipediaPopup = $state({
 	imageUrl: '',
 });
 
+// State for mobile header auto-hide
+let lastScrollY = $state(0);
+let showMobileHeader = $state(true);
+
 // State for story URL management - Initialize with empty reactive objects
 let expandedStories = $state<Record<string, boolean>>({});
 let isLatestBatch = $state(true);
@@ -497,6 +501,34 @@ onMount(() => {
 
 	window.addEventListener('keydown', handleGlobalKeyDown);
 
+	// Handle mobile header auto-hide on scroll
+	function handleScroll() {
+		if (!browser) return;
+
+		const currentScrollY = window.scrollY;
+
+		// Only apply on mobile (check window width)
+		if (window.innerWidth >= 768) {
+			showMobileHeader = true;
+			return;
+		}
+
+		// Show header if at top of page
+		if (currentScrollY < 10) {
+			showMobileHeader = true;
+		}
+		// Hide when scrolling down, show when scrolling up
+		else if (currentScrollY > lastScrollY && currentScrollY > 60) {
+			showMobileHeader = false;
+		} else if (currentScrollY < lastScrollY) {
+			showMobileHeader = true;
+		}
+
+		lastScrollY = currentScrollY;
+	}
+
+	window.addEventListener('scroll', handleScroll, { passive: true });
+
 	// Register callback for data reload start (e.g., language change)
 	dataReloadService.beforeReload(() => {
 		console.log('[UI] Data reload starting - showing loading indicator');
@@ -530,6 +562,7 @@ onMount(() => {
 		window.removeEventListener('hashchange', handleHashChange);
 		window.removeEventListener('popstate', handlePopState);
 		window.removeEventListener('keydown', handleGlobalKeyDown);
+		window.removeEventListener('scroll', handleScroll);
 		unsubscribeBatchNotifications();
 	};
 });
@@ -989,9 +1022,10 @@ if (browser && typeof window !== 'undefined') {
   />
   <!-- Sticky Header Container for Mobile (includes category nav when on top) -->
   <div
-    class="md:hidden sticky top-0 z-50 bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm shadow-sm relative"
+    class="md:hidden fixed top-0 left-0 right-0 z-50 bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm shadow-sm transition-transform duration-300"
+    style="transform: translateY({showMobileHeader ? '0' : '-100%'});"
   >
-    <div class="container mx-auto max-w-[732px] px-4 pt-8 pb-2">
+    <div class="container mx-auto max-w-[732px] px-4 pt-6 pb-2">
       <Header
         {offlineMode}
         {totalReadCount}
@@ -1033,8 +1067,8 @@ if (browser && typeof window !== 'undefined') {
   <!-- Main Content -->
   <main
     class="pb-[56px] md:pb-0 relative z-20 {categoryHeaderPosition === 'top'
-      ? 'pt-0'
-      : ''}"
+      ? 'pt-[120px]'
+      : 'pt-[80px]'} md:pt-0"
     ontouchstart={categorySwipeHandler.handleTouchStart}
     ontouchmove={categorySwipeHandler.handleTouchMove}
     ontouchend={categorySwipeHandler.handleTouchEnd}
@@ -1119,7 +1153,6 @@ if (browser && typeof window !== 'undefined') {
 
       <!-- Footer -->
       <Footer
-        {currentCategory}
         onShowAbout={() => displaySettings.showIntro = true}
       />
     </div>

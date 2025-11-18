@@ -37,13 +37,14 @@ function getColorClasses(type: Toast['type']): string {
 {#if toasts.length > 0}
 	<div class="fixed bottom-4 right-4 z-[9999] flex flex-col gap-2 max-w-md sm:max-w-sm max-sm:left-4 max-sm:right-4">
 		{#each toasts as toast (toast.id)}
+			{@const Icon = getIcon(toast.type)}
 			<div
 				class="p-4 rounded-lg border shadow-lg backdrop-blur-sm animate-slide-in {getColorClasses(toast.type)}"
 				role="alert"
 			>
 				<div class="flex items-center gap-3">
 					<div class="flex-shrink-0 flex items-center">
-						<svelte:component this={getIcon(toast.type)} size={20} />
+						<Icon size={20} />
 					</div>
 					<div class="flex-1 text-sm leading-5">
 						{toast.message}

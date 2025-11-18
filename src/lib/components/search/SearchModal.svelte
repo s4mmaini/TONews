@@ -2,7 +2,13 @@
 import { IconLoader2 } from '@tabler/icons-svelte';
 import { browser } from '$app/environment';
 import { s } from '$lib/client/localization.svelte';
-import { type SearchResult, SearchService } from '$lib/services/search';
+import {
+	type SearchResult,
+	type SearchFilter,
+	type FilterSuggestion,
+	type FilterContext,
+	SearchService,
+} from '$lib/services/search';
 import type { Category, Story } from '$lib/types';
 import { scrollLock } from '$lib/utils/scrollLock';
 import SearchInput from './SearchInput.svelte';
@@ -26,7 +32,7 @@ let searchInput = $state<SearchInput>();
 // Local state
 let searchState = $state({
 	query: '',
-	filters: [] as any[], // TODO: fix type
+	filters: [] as SearchFilter[],
 	results: [] as SearchResult[],
 	localResults: [] as SearchResult[],
 	historicalResults: [] as SearchResult[],
@@ -40,11 +46,11 @@ let searchState = $state({
 	totalCount: 0,
 });
 
-let filterSuggestions = $state<any[]>([]);
+let filterSuggestions = $state<FilterSuggestion[]>([]);
 let filterSuggestionIndex = $state(0);
 let showFilterSuggestions = $state(false);
 let isLoadingBatch = $state(false);
-let currentFilterContext = $state<any>(null);
+let currentFilterContext = $state<FilterContext | null>(null);
 
 // Initialize search service when categories change
 $effect(() => {

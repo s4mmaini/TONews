@@ -66,8 +66,13 @@ $effect(() => {
       <div class="w-full max-w-3xl rounded-lg bg-white p-8 dark:bg-gray-800">
         <div class="mb-8 flex items-start justify-between">
           <div class="w-full">
-            <h1 class="mb-2 text-3xl font-bold text-gray-900 dark:text-white">
-              TONews
+            <h1 class="mb-2 flex items-center gap-3 text-3xl font-bold text-gray-900 dark:text-white">
+              <img
+                src="/tonews-logo.png"
+                alt="TONews"
+                class="h-8 w-8"
+              />
+              About TONews
             </h1>
             <p class="text-gray-600 dark:text-gray-300">
               Your daily news digest on Telegram

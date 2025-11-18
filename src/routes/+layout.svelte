@@ -26,8 +26,8 @@ import { deepMerge, MetaTags } from 'svelte-meta-tags';
 // Props from layout load
 let { data, children }: { data: PageData; children: Snippet } = $props();
 
-// Set session context for child components
-setContext('session', data.session);
+// Set session context for child components (session may not be available in client-only mode)
+setContext('session', (data as any).session || null);
 
 // Initialize OverlayScrollbars hook (must be at component level, not in onMount)
 let scrollbarsInitializer: ((element: HTMLElement) => void) | null = null;
@@ -47,7 +47,7 @@ if (browser) {
 // Priority order: pageMetadata store (client-side) > page.data (SSR) > base tags
 // page.data contains the data from individual +page.server.ts files
 let metaTags = $derived(
-	deepMerge(data.baseMetaTags, deepMerge(page.data?.pageMetaTags || {}, pageMetadata || {})),
+	deepMerge((data as any).baseMetaTags || {}, deepMerge(page.data?.pageMetaTags || {}, pageMetadata || {})),
 );
 
 // Determine if the current locale is RTL
@@ -81,7 +81,7 @@ onMount(async () => {
 	}
 
 	// Load all settings from localStorage
-	const isLoggedIn = !!data.session?.loggedIn;
+	const isLoggedIn = !!((data as any).session?.loggedIn);
 	loadAllSettings({ isLoggedIn });
 
 	// Initialize language first (loads saved language from localStorage)
@@ -101,9 +101,10 @@ onMount(async () => {
 	}
 
 	// Initialize sync if user is logged in
-	if (data.session?.loggedIn) {
+	const session = (data as any).session;
+	if (session?.loggedIn) {
 		// Initialize sync manager
-		await syncManager.initialize(data.session.id);
+		await syncManager.initialize(session.id);
 	}
 
 	// Initialize OverlayScrollbars on the body element

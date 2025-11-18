@@ -324,13 +324,11 @@ function showAbout() {
         class="flex w-full items-center justify-center space-x-2 rounded-lg bg-gray-100 px-4 py-2 text-sm font-medium text-gray-800 transition-colors duration-200 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600"
       >
         <img
-          src={themeSettings.theme === "dark"
-            ? "/svg/kagi_news_icon_dark.svg"
-            : "/svg/kagi_news_icon.svg"}
+          src="/tonews-logo.png"
           alt=""
           class="h-4 w-4"
         />
-        <span>{s("settings.aboutKite.button") || "About Kite"}</span>
+        <span>About TONews</span>
       </button>
     </div>
   </div>

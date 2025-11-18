@@ -3,6 +3,7 @@ import { getContext } from 'svelte';
 import { s } from '$lib/client/localization.svelte';
 import { displaySettings } from '$lib/data/settings.svelte';
 import type { Article } from '$lib/types';
+import type { Session } from '$lib/types/session';
 import { getCitedArticlesForText } from '$lib/utils/citationAggregator';
 import { type CitationMapping, replaceWithNumberedCitations } from '$lib/utils/citationContext';
 import { getMapsProviderDisplayName } from '$lib/utils/mapsProvider';

@@ -143,7 +143,7 @@ class PreloadingConfigStore {
 	/**
 	 * Load configuration from localStorage
 	 */
-	private loadFromStorage() {
+	loadFromStorage() {
 		try {
 			const saved = localStorage.getItem('kite-preloading-config');
 			if (saved) {

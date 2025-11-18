@@ -187,7 +187,8 @@ function createChart() {
 					callbacks: {
 						title: (context) => {
 							// For time scale, the parsed.x contains the timestamp
-							const date = new Date(context[0].parsed.x);
+							const timestamp = context[0].parsed.x;
+							const date = new Date(timestamp !== null ? timestamp : 0);
 							return date.toLocaleDateString('en-US', {
 								month: 'short',
 								day: 'numeric',

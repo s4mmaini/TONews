@@ -11,5 +11,7 @@ export default defineConfig({
 		: undefined,
 	build: {
 		assetsInlineLimit: 0, // Prevent inlining assets
-	}
+		cssCodeSplit: true, // Enable CSS code splitting
+		minify: 'esbuild', // Use esbuild for faster minification
+	},
 });

@@ -379,10 +379,13 @@ class SyncManager {
 				const timestamp =
 					typeof change.timestamp === 'string' ? new Date(change.timestamp) : change.timestamp;
 
+				// Type guard: change.type === 'setting' means data is SettingChangeData
+				const settingData = change.data as import('$lib/types/sync').SettingChangeData;
+
 				// If value is null, it means the setting was removed from localStorage
-				if (change.data.value === null) {
+				if (settingData.value === null) {
 					localSettings.push({
-						key: change.data.key,
+						key: settingData.key,
 						value: null, // This signals deletion
 						version: 1,
 						updatedAt: timestamp,
@@ -390,13 +393,13 @@ class SyncManager {
 					});
 				} else {
 					localSettings.push({
-						key: change.data.key,
-						value: change.data.value,
+						key: settingData.key,
+						value: settingData.value,
 						version: 1,
 						updatedAt: timestamp,
 					});
 				}
-				processedKeys.add(change.data.key);
+				processedKeys.add(settingData.key);
 			}
 		}
 
@@ -497,7 +500,7 @@ class SyncManager {
 			// Apply resolution based on strategy
 			if (this.conflictResolutionStrategy === 'remote') {
 				// Use remote version
-				if (conflict.type === 'setting') {
+				if (conflict.type === 'setting' && conflict.remote) {
 					await this.updateLocalSettings([conflict.remote]);
 				} else if (conflict.type === 'history') {
 					// Read history is append-only, no real conflicts
@@ -532,7 +535,7 @@ class SyncManager {
 		const pendingSettingKeys = new Set(
 			this.pendingChanges
 				.filter((change) => change.type === 'setting')
-				.map((change) => change.data.key),
+				.map((change) => (change.data as import('$lib/types/sync').SettingChangeData).key),
 		);
 
 		console.log('[Sync] Settings with pending changes:', Array.from(pendingSettingKeys));
@@ -761,7 +764,7 @@ class SyncManager {
 
 		// Remove any existing pending change for this key (deduplication)
 		this.pendingChanges = this.pendingChanges.filter(
-			(change) => !(change.type === 'setting' && change.data.key === key),
+			(change) => !(change.type === 'setting' && (change.data as import('$lib/types/sync').SettingChangeData).key === key),
 		);
 
 		// Add the new change
@@ -1017,17 +1020,21 @@ class SyncManager {
 		if (pendingHistory.length === 0) return;
 
 		// Bulk upload pending read history
-		const entries = pendingHistory.map((change) => ({
-			clientId:
-				change.data.clientId ||
-				`${this.deviceId}_${change.data.clusterId}_${change.timestamp.toISOString()}_${Math.random().toString(36).substring(2, 11)}`,
-			clusterId: change.data.clusterId,
-			categoryId: change.data.categoryId,
-			batchRunId: change.data.batchRunId,
-			timestamp: change.data.timestamp,
-			readDuration: change.data.readDuration,
-			languageCode: change.data.languageCode || 'en',
-		}));
+		const entries = pendingHistory.map((change) => {
+			// Type guard: change.type === 'read_history' means data is ReadHistoryChangeData
+			const historyData = change.data as import('$lib/types/sync').ReadHistoryChangeData;
+			return {
+				clientId:
+					historyData.clientId ||
+					`${this.deviceId}_${historyData.clusterId}_${change.timestamp.toISOString()}_${Math.random().toString(36).substring(2, 11)}`,
+				clusterId: historyData.clusterId,
+				categoryId: historyData.categoryId,
+				batchRunId: historyData.batchRunId,
+				timestamp: historyData.timestamp,
+				readDuration: historyData.readDuration,
+				languageCode: historyData.languageCode || 'en',
+			};
+		});
 
 		try {
 			const response = await fetch('/api/sync/read-history-bulk', {

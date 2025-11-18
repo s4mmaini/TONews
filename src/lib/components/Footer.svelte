@@ -27,17 +27,13 @@ function handleAboutClick() {
       title={s("footer.about") || "About TONews"}
     >
       <img
-        src={themeSettings.isDark
-          ? "/svg/kagi_news_icon_dark.svg"
-          : "/svg/kagi_news_icon.svg"}
+        src="/tonews-logo.png"
         alt={s("app.logo.iconAlt") || "TONews"}
         class="h-5 w-5"
       />
       <span class="text-xs sm:text-sm">
-        <span class="sm:hidden">{s("footer.aboutMobile") || "About"}</span>
-        <span class="hidden sm:inline"
-          >{s("footer.about") || "About TONews"}</span
-        >
+        <span class="sm:hidden">About</span>
+        <span class="hidden sm:inline">About TONews</span>
       </span>
     </button>
   </div>

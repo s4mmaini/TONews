@@ -103,7 +103,30 @@ function handleStoryClick() {
 		}, 300);
 		return;
 	}
-	if (onToggle) onToggle();
+
+	// If story is being collapsed, preserve scroll position
+	if (isExpanded && browser && storyElement) {
+		const storyTop = storyElement.getBoundingClientRect().top + window.pageYOffset;
+		const currentScroll = window.pageYOffset;
+
+		// Call toggle to collapse the story
+		if (onToggle) onToggle();
+
+		// After the story collapses, restore the scroll position relative to the story's top
+		requestAnimationFrame(() => {
+			setTimeout(() => {
+				const scrollOffset = currentScroll - storyTop;
+				const newStoryTop = storyElement.getBoundingClientRect().top + window.pageYOffset;
+				window.scrollTo({
+					top: newStoryTop + scrollOffset,
+					behavior: 'instant',
+				});
+			}, 50);
+		});
+	} else {
+		// Expanding the story
+		if (onToggle) onToggle();
+	}
 }
 
 // Handle read toggle click
@@ -112,8 +135,9 @@ function handleReadClick(e: Event) {
 	if (onReadToggle) onReadToggle();
 }
 
-// Scroll to story when expanded
+// Scroll to story when expanded (but NOT when collapsed)
 $effect(() => {
+	// Only scroll when expanding, not when collapsing
 	if (isExpanded && browser && storyElement && shouldAutoScroll) {
 		// Small delay to ensure the content is rendered
 		setTimeout(() => {

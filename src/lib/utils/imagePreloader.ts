@@ -1,6 +1,22 @@
 import { browser } from '$app/environment';
 import type { Story } from '$lib/types';
 
+// Extend Window interface for imageCache debug helper
+declare global {
+	interface Window {
+		imageCache?: {
+			stats: () => { cachedCount: number; downloadingCount: number; cachedImages: string[] };
+			clear: () => void;
+			preload: (url: string) => Promise<void>;
+			getSrc: (url: string) => string;
+			getProxiedUrl: (url: string) => string;
+			isCached: (url: string) => boolean;
+			test: (imageUrl: string) => Promise<{ cached: boolean; dataUrl: boolean; loadTime: number }>;
+			testBulk: (imageUrls: string[]) => Promise<{ imageCount: number; loadTime: number; beforeCached: number; afterCached: number }>;
+		};
+	}
+}
+
 // Cache to store image data URLs (original URL -> data URL)
 const imageDataCache = new Map<string, string>();
 const downloadPromises = new Map<string, Promise<string>>();
@@ -196,7 +212,7 @@ export function preloadImages(imageUrls: string[], _priority = false): Promise<u
 	// Remove throttling - load all images simultaneously for better performance
 	// The browser will handle the connection limiting automatically
 	const promises = validUrls.map((url) => preloadImage(url));
-	return Promise.all(promises);
+	return Promise.all(promises) as Promise<undefined[]>;
 }
 
 /**
@@ -222,7 +238,7 @@ export function extractStoryImages(story: Story): string[] {
 		const articleImages = story.articles
 			.slice(0, 2)
 			.map((article) => article.image)
-			.filter((img) => img && typeof img === 'string');
+			.filter((img) => img && typeof img === 'string') as string[];
 		images.push(...articleImages);
 	}
 
